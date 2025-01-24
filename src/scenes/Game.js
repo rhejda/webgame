@@ -106,36 +106,39 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    const keyboard = this.input.keyboard.addKeys('W, A, S, D, SPACE');
-    const cursors = this.input.keyboard.createCursorKeys();
-    const player = this.player;
+    var keyboard = this.input.keyboard.addKeys('W, A, S, D, SPACE');
+    var cursors = this.input.keyboard.createCursorKeys();
+    var player = this.player;
 
     if (keyboard.D.isDown) {
         player.setVelocityX(player.player_speed);
         player.stand_right = true;
-        player.anims.play('right', true);
+        // player.anims.play('right', true);
         if (keyboard.SPACE.isDown && player.can_jump == true) {
             player.setVelocityY(-player.jump_velocity)
         }
-        player.can_jump = false;
     }
     else if (keyboard.A.isDown) {
         player.setVelocityX(-player.player_speed);
         player.stand_right = false; // no longer facing right
-        player.anims.play('left', true);
+        // player.anims.play('left', true);
         if (keyboard.SPACE.isDown && player.can_jump == true) {
             player.setVelocityY(-player.jump_velocity)
         }
     }
     else if (keyboard.SPACE.isDown && player.can_jump == true) {
         player.setVelocityY(-player.jump_velocity)  
+        player.can_jump = false
     }
     else {
-        console.log(player.body.velocity.x);
-        console.log(player.stand_right);
-        console.log(player.can_jump);
+        // console.log(player.body.velocity.x);
+        // console.log(player.stand_right);
+        // console.log(player.can_jump);
         player.setVelocityX(0);
         player.sword_up = false;
+
+
     }
+    player.update()
   }
 }
