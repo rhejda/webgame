@@ -21,17 +21,76 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.jump_velocity = 325;
         this.body.setVelocity(0)
         this.sword_up = false
+
+        
+        this.anims.create({
+            key: 'face_right',
+            frames: [{ key: 'hero', frame: 8 }],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('hero', { start: 0, end: 7 }),
+            randomFrame: true,
+            frameRate: scene.framerate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'face_left',
+            frames: [ { key: 'hero', frame: 18 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('hero', { start: 10, end: 17 }),
+            randomFrame: true,
+            frameRate: scene.framerate,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumping_right',
+            frames: [ { key: 'hero', frame: 7 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'floating_right',
+            frames: [ { key: 'hero', frame: 4 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'floating_left',
+            frames: [ { key: 'hero', frame: 11 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'falling_right',
+            frames: [ { key: 'hero', frame: 9 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'jumping_left',
+            frames: [ { key: 'hero', frame: 17 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'falling_left',
+            frames: [ { key: 'hero', frame: 19 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'jumping_left_sword',
+            frames: [ { key: 'hero', frame: 13 } ],
+            frameRate: scene.framerate
+        });
+        this.anims.create({
+            key: 'jumping_right_sword',
+            frames: [ { key: 'hero', frame: 3 } ],
+            frameRate: scene.framerate
+        });
     }
 
 
     update() {
-
-        // walking right and left
-        if (this.body.velocity.x < 0) {
-            this.anims.play("left", true)
-        } else if (this.body.velocity.x > 0) {
-            this.anims.play("right", true)
-        }
 
         // is sword up?
         if (this.anims.currentFrame != null) {
@@ -42,6 +101,27 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.sword_up = false;
             }
         }
+
+        // on the ground
+        if (this.body.velocity.y == 0 ) {
+            // standing looking direction
+            if (this.body.velocity.x == 0 ) {
+                if (this.stand_right == true) {
+                    this.anims.play('face_right', true);
+                }
+                else {
+                    this.anims.play('face_left', true);
+                }
+            }
+
+            // walking right and left
+            if (this.body.velocity.x < 0) {
+                this.anims.play("left", true)
+            } else if (this.body.velocity.x > 0) {
+                this.anims.play("right", true)
+            }
+        }
+
 
         // sprite is moving upward facing right
         if(this.body.velocity.y < 0 && this.stand_right == true) {
@@ -83,14 +163,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.can_jump = true;
         }
 
-        // standing looking direction
-        if (this.body.velocity.x == 0) {
-            if (this.stand_right == true) {
-                this.anims.play('face_right', true);
-            }
-            else {
-                this.anims.play('face_left', true);
-            }
-        }
+
     }
 }
