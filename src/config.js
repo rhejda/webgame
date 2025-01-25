@@ -1,10 +1,14 @@
 import Phaser from 'phaser'
 
+console.log(window.innerHeight);
+console.log(window.innerWidth);
+console.log(window);
+
 export default {
   type: Phaser.AUTO,
   parent: 'content',
-  width: 853,
-  height: 512,
+  width: window.innerWidth - 5,
+  height: window.innerHeight - 5,
   physics: {
     default: 'arcade',
     arcade: {

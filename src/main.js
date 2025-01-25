@@ -12,6 +12,7 @@ const gameConfig = Object.assign(config, {
 class Game extends Phaser.Game {
   constructor () {
     super(gameConfig)
+    
   }
 }
 
